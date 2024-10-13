@@ -1,0 +1,15 @@
+<!-- EduInvApp/templates/approval_email.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Application Approved</title>
+</head>
+<body>
+    <h1>Congratulations!</h1>
+    <p>Your loan application has been approved.</p>
+    <p>Click the following link to view your loan details:</p>
+    <a href="{{ client_url }}">View Details</a>
+    <p>If the link does not work, copy and paste the following URL into your browser:</p>
+    <p>{{ client_url }}</p>
+</body>
+</html>

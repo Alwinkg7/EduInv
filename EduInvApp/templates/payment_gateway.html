@@ -1,0 +1,85 @@
+{% extends 'Investor.html' %}
+{% load static %}
+
+{% block content %}
+
+    <div class="container"><br><br><br><br>
+        <h2>Payment Gateway</h2>
+        <p>Please fill in your payment details below to complete the transaction.</p>
+
+        <form method="POST" action="{% url 'process_payment' %}">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label for="investor_name">Investor Name</label>
+                <input type="text" id="investor_name" name="investor_name" value="{{ investor.Investor_first_name }} {{ investor.Investor_last_name }}" readonly required>
+            </div>
+
+            <div class="form-group">
+                <label for="amount">Amount to Pay</label>
+                <input type="text" id="amount" name="amount" value="{{ offer.amount }}" readonly required>
+            </div>
+
+            <div class="form-group">
+                <label for="card_number">Card Number</label>
+                <input type="text" id="card_number" name="card_number" placeholder="Enter your card number" required>
+            </div>
+
+            <div class="form-group">
+                <label for="expiry_date">Expiry Date</label>
+                <input type="text" id="expiry_date" name="expiry_date" placeholder="MM/YY" required>
+            </div>
+
+            <div class="form-group">
+                <label for="cvv">CVV</label>
+                <input type="text" id="cvv" name="cvv" placeholder="Enter CVV" required>
+            </div>
+
+            <div class="form-group">
+                <label for="billing_address">Billing Address</label>
+                <input type="text" id="billing_address" name="billing_address" placeholder="Enter billing address" required>
+            </div>
+
+            <button type="submit" class="btn btn-dark">Proceed to Pay</button>
+        </form>
+
+        <!-- Add any necessary instructions or notes for the payment process -->
+        <p class="note">
+            By clicking "Proceed to Pay", you agree to our terms and conditions.
+        </p>
+
+    </div>
+     <script>
+        var stripe = Stripe('{{ stripe_public_key }}');
+        var elements = stripe.elements();
+        var cardElement = elements.create('card');
+        cardElement.mount('#card-element');
+
+        var form = document.getElementById('payment-form');
+        form.addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            stripe.createPaymentMethod('card', cardElement).then(function(result) {
+                if (result.error) {
+                    console.error(result.error.message);
+                } else {
+                    fetch("{% url 'payment_gateway' offer.id %}", {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRFToken': '{{ csrf_token }}'
+                        },
+                        body: JSON.stringify({
+                            payment_method_id: result.paymentMethod.id
+                        })
+                    }).then(function(response) {
+                        return response.text();
+                    }).then(function(result) {
+                        console.log(result);
+                    });
+                }
+            });
+        });
+    </script>
+{% endblock %}
+<script src="https://js.stripe.com/v3/"></script>

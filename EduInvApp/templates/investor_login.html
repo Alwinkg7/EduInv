@@ -1,0 +1,40 @@
+{% extends "Client.html" %}
+{% block content %}
+    <br><br><br><br><br><br><br><br><br><br>
+
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h3>Investor Login</h3>
+                    </div>
+                    <div class="card-body">
+                        <form method="post" action="{% url 'investor_login' %}">
+                            {% csrf_token %}
+                            <div class="form sign-in">
+                                <h2>Investor Sign In</h2>
+                                <label>
+                                    <span>Email</span>
+                                    <input type="email" name="useremail" required/>
+                                </label>
+                                <label>
+                                    <span>OTP</span>
+                                    <input type="text" name="otp" required/>
+                                </label>
+                                <button type="submit" class="btn btn-dark">Sign In</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- Add a link for investor sign-up if needed -->
+                <div class="text-center mt-3">
+{#                    <p>Don't have an account? <a href="{% url '' %}">Sign up here</a></p>#}
+                </div>
+            </div>
+        </div>
+    </div><br><br><br>
+
+{#    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>#}
+{% endblock %}

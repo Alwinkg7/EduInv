@@ -1,0 +1,59 @@
+{% extends 'Investor.html' %}
+{% load static %}
+
+{% block content %}
+     <div class="container mt-5">
+        <h1>Welcome, {{ investor_name }}</h1>
+        <h3>Available Loan Applicants</h3>
+
+        <table class="table table-bordered mt-3">
+            <thead>
+                <tr>
+                    <th>Applicant Name</th>
+                    <th>Amount Requested</th>
+                    <th>Qualification</th>
+                    <th>Marks in Highest Qualification</th>
+                    <th>College Name</th>
+                    <th>Score in Entrance Exam</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for applicant in applicants %}
+                <tr>
+                    <td>{{ applicant.Applicant_first_name }} {{ applicant.Applicant_last_name }}</td>
+                    <td>{{ applicant.Applicant_loan_amount }}</td>
+                    <td>{{ applicant.Applicant_highest_qualification }}%</td>
+                    <td>{{ applicant.Applicant_marks_highest_qualification }}</td>
+                    <td>{{ applicant.Applicant_college_name }}</td>
+                    <td>{{ applicant.Applicant_entrance_scorecard }}</td>
+                    <td>
+                        <!-- Link to view details of the applicant -->
+                        <a href="{% url 'applicant_details' applicant.id %}" class="btn btn-primary btn-sm">View Details</a>
+
+                        <!-- Form to submit an offer -->
+                        <form method="post" action="{% url 'submit_offer' applicant.id %}" class="mt-2">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <input type="number" name="offer_amount" placeholder="Offer Amount" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="number" name="interest_rate" placeholder="Interest Rate (%)" class="form-control" required>
+                            </div>
+                            <div class="form-group mt-2">
+                                <input type="number" name="duration" placeholder="Duration (years)" class="form-control" required>
+                            </div>
+                            <button type="submit" class="btn btn-success btn-sm mt-2">Submit Offer</button>
+                        </form>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5">No applicants available at the moment.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{#    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>#}
+{% endblock %}

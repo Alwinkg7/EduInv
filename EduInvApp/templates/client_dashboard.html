@@ -1,0 +1,77 @@
+{% extends "Client.html" %}
+{% block content %}
+
+     <div class="container" style="margin-top: 300px">
+        <h1>Welcome, {{ applicant.Applicant_first_name }} {{ applicant.Applicant_last_name }}!</h1>
+
+        <!-- Client Info Section --><br><br>
+        <section class="client-info">
+            <h2>Client Information</h2>
+            <p><strong>Email:</strong> {{ applicant.Applicant_email }}</p>
+{#            <p><strong>Date of Signup:</strong> {{ client.created_at }}</p>#}
+        </section><br><br>
+
+        <!-- Offers Section -->
+        <section class="offers">
+            <h2>Offers Received</h2>
+
+            {% if offers %}
+                <table>
+                    <thead>
+                        <tr>
+                            <th></th>
+                            <th>Amount</th>
+                            <th></th>
+                            <th>Interest Rate</th>
+                            <th></th>
+                            <th>Duration </th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for offer in offers %}
+                        <tr>
+                            <td></td>
+                            <td>{{ offer.offer_amount }}</td>
+                            <td></td>
+                            <td>{{ offer.interest_rate }}%</td>
+                            <td></td>
+                            <td>{{ offer.duration }}</td>
+                            <td></td>
+                            <td></td>
+                            <td>
+                                <!-- Accept or reject the offer -->
+                                <a href="{% url 'accept_offer' offer.id %}" class="btn">Accept</a><br><br><br>
+                                <a href="{% url 'reject_offer' offer.id %}" class="btn">Reject</a><br><br><br>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <p>No offers received yet.</p>
+            {% endif %}
+        </section>
+<br><br><br>
+        <section>
+            <h2>Your Loan Details</h2>
+            <p>Total Loan Amount: {{ repayment.total_loan_amount }}</p>
+            <p>Installment Amount (EMI): {{ repayment.monthly_installment }}</p>
+            <p>Total Installments: {{ repayment.total_installments }}</p>
+            <p>Installments Paid: {{ repayment.installments_paid }}</p>
+            <p>Next Due Date: {{ repayment.next_due_date }}</p>
+
+            {% if repayment.installments_paid < repayment.total_installments %}
+                <a href="{% url 'loan_repayment' repayment.applicant.id %}">Make Next Installment Payment</a>
+            {% else %}
+                <p>All installments paid. Loan is fully repaid.</p>
+            {% endif %}
+        </section>
+     <br><br><br>
+        <!-- Logout Button -->
+        <section class="logout" >
+            <a href="" class="btn">Logout</a>
+        </section><br><br><br>
+    </div>
+{% endblock %}

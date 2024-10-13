@@ -1,0 +1,93 @@
+{% extends 'AdminPanel.html' %}
+{% block content %}
+<section id="tmpl-structure">
+    <h2 class="title">Approve Applicant</h2>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive pt-3">
+
+                    <form method="post" action="{% url 'approve_applicant' applicant.id %}">
+                        {% csrf_token %}
+                        <div>
+                            <h4 class="table-hover">Applicant details</h4><br>
+                            <p><strong>Applicant First Name:</strong> {{ applicant.Applicant_first_name }}</p>
+                            <p><strong>Applicant Last Name:</strong> {{ applicant.Applicant_last_name }}</p>
+                            <p><strong>Applicant Email:</strong> {{ applicant.Applicant_email }}</p>
+                            <p><strong>Loan Amount:</strong> {{ applicant.Applicant_loan_amount }}</p>
+                            <p><strong>Applicant Gender:</strong> {{ applicant.Applicant_gender }}</p>
+                            <p><strong>Applicant Date Of Birth:</strong> {{ applicant.Applicant_dob }}</p>
+                            <p><strong>Applicant Phone Number:</strong> {{ applicant.Applicant_phone_number }}</p>
+                            <p><strong>Applicant Father Name:</strong> {{ applicant.Applicant_father_name }}</p>
+                            <p><strong>Applicant Mother Name:</strong> {{ applicant.Applicant_mother_name }}</p>
+                            <p><strong>Father Phone Number:</strong> {{ applicant.Applicant_father_phone }}</p>
+                            <p><strong>Mother Phone Number:</strong> {{ applicant.Applicant_mother_phone }}</p>
+                            <p><strong>Father Occupation:</strong> {{ applicant.Applicant_father_job }}</p>
+                            <p><strong>Mother Occupation:</strong> {{ applicant.Applicant_mother_job }}</p>
+                            <p><strong>Marital Status:</strong> {{ applicant.Applicant_marital_status }}</p><br>
+                            <h4 class="table-hover">Address Details</h4><br>
+                            <p><strong>House Number:</strong> {{ applicant.Applicant_house_number }}</p>
+                            <p><strong>Street Name:</strong> {{ applicant.Applicant_street_name }}</p>
+                            <p><strong>Post Office:</strong> {{ applicant.Applicant_post_office }}</p>
+                            <p><strong>City/Town:</strong> {{ applicant.Applicant_city }}</p>
+                            <p><strong>State:</strong> {{ applicant.Applicant_state }}</p>
+                            <p><strong>Country:</strong> {{ applicant.Applicant_country }}</p>
+                            <p><strong>Pincode:</strong> {{ applicant.Applicant_pincode }}</p>
+                            <p><strong>Highest Qualification:</strong> {{ applicant.Applicant_highest_qualification }}</p>
+                            <p><strong>Marks in highest qualification:</strong> {{ applicant.Applicant_marks_highest_qualification }}</p>
+                            <p><strong>Marks in HSE:</strong> {{ applicant.Applicant_marks_hse }}</p>
+                            <p><strong>Marks in SSLC:</strong> {{ applicant.Applicant_marks_sslc }}</p>
+                            <h4 class="table-hover">Details Of Co-applicant</h4><br>
+                            <p><strong>First Name:</strong> {{ applicant.Co_applicant_first_name }}</p>
+                            <p><strong>Last Name:</strong> {{ applicant.Co_applicant_last_name }}</p>
+                            <p><strong>Gender:</strong> {{ applicant.Co_applicant_gender }}</p>
+                            <p><strong>Email:</strong> {{ applicant.Co_applicant_email }}</p>
+                            <p><strong>Phone Number:</strong> {{ applicant.Co_applicant_phone_number }}</p>
+                            <p><strong>Relation:</strong> {{ applicant.co_applicant_relation }}</p>
+                            <p><strong>Occupation:</strong> {{ applicant.co_applicant_job }}</p>
+                            <p><strong>Address:</strong> {{ applicant.co_applicant_address }}</p>
+                            <h4 class="table-hover">Details Of College</h4><br>
+                            <p><strong>Name:</strong> {{ applicant.Applicant_college_name }}</p>
+                            <p><strong>Location:</strong> {{ applicant.Applicant_college_location }}</p>
+                            <p><strong>University:</strong> {{ applicant.Applicant_university }}</p>
+                            <h4 class="table-hover">Details Of Bank</h4><br>
+                            <p><strong>Account Number:</strong> {{ applicant.Applicant_account_number }}</p>
+                            <p><strong>IFSC code:</strong> {{ applicant.Applicant_ifsc_code }}</p>
+                            <p><strong>Name:</strong> {{ applicant.Appicant_bank_name }}</p>
+                            <p><strong>Branch:</strong> {{ applicant.Applicant_bank_branch }}</p>
+                            <h4 class="table-hover">Documents uploads</h4><br><br>
+                            <p><strong>Applicant Passport size photo:</strong> <img src="{{ applicant.Applicant_photo.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Aadhaar Card:</strong> <img src="{{ applicant.Applicant_aadhaar.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Income certificate:</strong> <img src="{{ applicant.Applicant_income_certificate.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Pan Card:</strong> <img src="{{ applicant.Applicant_pancard.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Ration card:</strong> <img src="{{ applicant.Applicant_ration_card.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Bank Passbook:</strong> <img src="{{ applicant.Applicant_bank_passbook.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant any id:</strong> <img src="{{ applicant.Applicant_any_id.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Birth Certificate:</strong> <img src="{{ applicant.Applicant_birth_certificate.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant SSLC certificate:</strong> <img src="{{ applicant.Applicant_sslc_certificate.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant HSE Certificate:</strong> <img src="{{ applicant.Applicant_plus2_certificate.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Highest Qualification Certificate:</strong> <img src="{{ applicant.Applicant_highest_qualification_certificate.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Co-applicant Passport size photo:</strong> <img src="{{ applicant.Co_applicant_photo.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Co-applicant Aadhaar Card:</strong> <img src="{{ applicant.Co_applicant_aadhaar.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Co-applicant Pan Card:</strong> <img src="{{ applicant.Co_applicant_pancard.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Co-applicant Bank Passbook:</strong> <img src="{{ applicant.Co_applicant_bank_passbook.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Co-applicant any id:</strong> <img src="{{ applicant.Co_applicant_any_id.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Bonafide Certificate:</strong> <img src="{{ applicant.Applicant_bonafide_certificate.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Fee Structure:</strong> <img src="{{ applicant.Applicant_fee_structure.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Demand Letter:</strong> <img src="{{ applicant.Applicant_demand_letter.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Entrance Scorecard:</strong> <img src="{{ applicant.Applicant_entrance_scorecard.url }}" height="75px" width="75px" alt=""></p>
+                            <p><strong>Applicant Loan approval:</strong> <img src="{{ applicant.Applicant_loan_approval.url }}" height="75px" width="75px" alt=""></p>
+                        </div>
+
+                        <div>
+                            <button type="submit" name="approve" value="approve">Approve</button>
+                            <button type="submit" name="disapprove" value="disapprove">Disapprove</button>
+                            <a href="{% url 'displayloanapplications' %}">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

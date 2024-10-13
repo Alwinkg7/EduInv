@@ -1,0 +1,20 @@
+{% extends "Client.html" %}
+{% block content %}
+    <br><br><br><br><br><br><br><br><br><br>
+    <form style="margin-left: 70px" method="post" action="{% url 'applicant_login' %}">
+        {% csrf_token %}
+        <div class="form sign-in">
+            <h2>Applicant Sign In</h2><br><br>
+            <label>
+                <span>Email</span>
+                <input type="email" name="email" required/>
+            </label>
+            <label>
+                <span>OTP</span>
+                <input type="text" name="otp" required/>
+            </label>
+            <br><br>
+            <button type="submit" class="btn btn-dark" >Sign In</button>
+        </div>
+    </form><br><br><br>
+{% endblock %}

@@ -1,0 +1,767 @@
+
+<!doctype html>
+
+{% load static %}
+<html class="no-js" lang="zxx">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title>Edu.Inv_ApplyNow</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="manifest" href="site.webmanifest">
+		<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+
+		<!-- CSS here -->
+            <link rel="stylesheet" href="{% static 'assets/css/bootstrap.min.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/owl.carousel.min.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/slicknav.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/flaticon.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/animate.min.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/magnific-popup.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/fontawesome-all.min.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/themify-icons.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/slick.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/nice-select.css' %}">
+            <link rel="stylesheet" href="{% static 'assets/css/style.css' %}">
+   </head>
+
+   <body>
+    <!-- Preloader Start -->
+    <div id="preloader-active">
+        <div class="preloader d-flex align-items-center justify-content-center">
+            <div class="preloader-inner position-relative">
+                <div class="preloader-circle"></div>
+                <div class="preloader-img pere-text">
+                    <img src="{% static 'assets/img/logo/eduinv-client.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Preloader Start -->
+    <header>
+        <!-- Header Start -->
+        <div class="header-area header-transparent">
+                <div class="main-header  header-sticky">
+                    <div class="container-fluid">
+                        <div class="row align-items-center">
+                            <!-- Logo -->
+                            <div class="col-xl-2 col-lg-2 col-md-1">
+                                <div class="logo">
+                                    <a href="{% url 'homepage' %}"><img src="{% static 'assets/img/logo/eduinv-client.png' %}" alt=""></a>
+                                </div>
+                            </div>
+                            <div class="col-xl-10 col-lg-10 col-md-10">
+                            <div class="menu-main d-flex align-items-center justify-content-end">
+                                <!-- Main-menu -->
+                                <div class="main-menu f-right d-none d-lg-block">
+                                    <nav>
+                                        <ul id="navigation">
+                                            <li><a href="{% url 'clientpage' %}">Home</a></li>
+                                            <li><a href="{% url 'aboutpage' %}">About</a></li>
+{#                                            <li><a href="services.html">Services</a></li>#}
+{#                                            <li class="active"><a href="blog.html">Blog</a>#}
+{#                                                <ul class="submenu">#}
+{#                                                    <li><a href="blog.html">Blog</a></li>#}
+{#                                                    <li><a href="blog_details.html">Blog Details</a></li>#}
+{#                                                    <li><a href="elements.html">Element</a></li>#}
+{#                                                    <li><a href="apply.html">Apply Now</a></li>#}
+{#                                                </ul>#}
+{#                                            </li>#}
+                                            <li><a href="{% url 'contactpage' %}">Contact</a></li>
+                                        </ul>
+                                    </nav>
+                                </div>
+                                <div class="header-right-btn f-right d-none d-lg-block">
+                                    {% if request.session.useremaill %}
+                                        <a href="{% url 'userloginpageclient' %}" class="btn header-btn"><span></span>{{ request.session.useremaill }}</a>
+                                    {% endif %}
+
+                                </div>
+                            </div>
+                            </div>
+                            <!-- Mobile Menu -->
+                            <div class="col-12">
+                                <div class="mobile_menu d-block d-lg-none"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        </div>
+        <!-- Header End -->
+    </header>
+    <main>
+
+        <!-- Hero Start-->
+        <div class="hero-area2  slider-height2 hero-overly2 d-flex align-items-center ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="hero-cap text-center pt-50">
+                            <h2>Apply Form</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Hero End -->
+        {% if messages %}
+    {% for message in messages %}
+      <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+        {{ message }}
+      </div>
+    {% endfor %}
+  {% endif %}
+        <!-- Apply Area Start -->
+        <div class="apply-area pt-150 pb-150">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8">
+                        <div class="apply-wrapper">
+                            <!-- Form -->
+                            <form method="post" action="{% url 'saveapplicantloan' %}" enctype="multipart/form-data">
+                                {% csrf_token %}
+                                {{ form.as_p }}
+                                <div class="row">
+                                    <div class="col-lg-6">
+                                       <div class="single-form">
+                                            <label>* LOAN AMOUNT ($) </label>
+                                            <input type="text" name="applicant_loan_amount" placeholder="Enter Amount">
+                                       </div>
+                                    </div><br>
+                                   <!-- Nice Select -->
+{#                                    <div class="col-lg-6">#}
+{#                                       <div class="single-form">#}
+{#                                            <label>* PURPOSE OF LOAN </label>#}
+{#                                            <div class="select-option mb-10">#}
+{#                                                <select name="select" id="select1">#}
+{#                                                    <option value="">Choose Categories</option>#}
+{#                                                    <option value="">Category 1</option>#}
+{#                                                    <option value="">Category 2</option>#}
+{#                                                    <option value="">Category 3</option>#}
+{#                                                </select>#}
+{#                                            </div>#}
+{#                                       </div>#}
+{#                                    </div>#}
+                                    <!-- Radio -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                        </div>
+                                    </div><br><br>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>PERSONAL DETAILS</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="single-form">
+                                            <label>* GENDER</label>
+                                            <div class="select-option mb-10">
+                                                <select name="applicant_gender" id="select1">
+                                                    <option value="Choose_Option">Choose Option</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div><br><br>
+                                    <!-- First Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                             <label>* FIRST NAME</label>
+                                             <input type="text" name="applicant_first_name" placeholder="Enter name">
+                                        </div>
+                                     </div>
+                                     <!-- Last Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                             <label>* LAST NAME</label>
+                                             <input type="text" name="applicant_last_name" placeholder="Enter name">
+                                        </div>
+                                     </div>
+                                     <!-- Nice Select -->
+                                   <!-- Nice Select -->
+                                    <div class="col-lg-12">
+                                        <div class="single-form">
+                                            <label>* DATE OF BIRTH</label>
+                                            <div class="select-option mb-10">
+                                                <input type="date" name="applicant_dob">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- First Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Email Address</label>
+                                            <input type="email" name="applicant_email" placeholder="Enter email">
+                                        </div>
+                                    </div>
+                                    <!-- Last Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Phone Number</label>
+                                            <input type="text" name="applicant_phone_number" placeholder="Enter Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                             <label>* FATHER NAME</label>
+                                             <input type="text" name="applicant_father_name" placeholder="Enter name">
+                                        </div>
+                                     </div>
+                                     <!-- Last Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                             <label>* MOTHER NAME</label>
+                                             <input type="text" name="applicant_mother_name" placeholder="Enter name">
+                                        </div>
+                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* PHONE NUMBER OF FATHER</label>
+                                            <input type="text" name="applicant_father_phone" placeholder="Enter Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* PHONE NUMBER OF MOTHER</label>
+                                            <input type="text" name="applicant_mother_phone" placeholder="Enter Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                             <label>* OCCUPATION OF FATHER</label>
+                                             <input type="text" name="applicant_father_job" placeholder="Enter here">
+                                        </div>
+                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* OCCUPATION OF MOTHER</label>
+                                            <input type="text" name="applicant_mother_job" placeholder="Enter here">
+                                        </div>
+                                    </div>
+                                    <!-- Nice Select -->
+                                    <div class="col-lg-12">
+                                        <div class="single-form">
+                                            <label>* MARITAL STATUS</label>
+                                            <div class="select-option mb-10">
+                                                <select name="applicant_marital_status" id="select1">
+                                                    <option value="Choose_Categories">Choose Categories</option>
+                                                    <option value="married">Married</option>
+                                                    <option value="unmarried">Unmarried</option>
+                                                    <option value="nil">NIL</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- HOUSE NUMBER -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* HOUSE NUMBER</label>
+                                            <input type="text" name="applicant_house_number" placeholder="Enter House Number">
+                                        </div>
+                                    </div>
+                                    <!-- STREET -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* STREET</label>
+                                            <input type="text" name="applicant_street_name" placeholder="Enter Street Name">
+                                        </div>
+                                    </div>
+                                    <!-- POST-OFFICE -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* POST-OFFICE</label>
+                                            <input type="text" name="applicant_post_office" placeholder="Enter Post-Office Name">
+                                        </div>
+                                    </div>
+                                    <!-- CITY/TOWN -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* CITY/TOWN</label>
+                                            <input type="text" name="applicant_city" placeholder="Enter City/Town Name">
+                                        </div>
+                                    </div>
+                                    <!-- State-->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* STATE</label>
+                                            <input type="text" name="applicant_state" placeholder="Enter State Name">
+                                        </div>
+                                    </div>
+                                    <!-- Country -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* COUNTRY</label>
+                                            <input type="text" name="applicant_country" placeholder="Enter Country Name">
+                                        </div>
+                                    </div>
+                                    <!-- PINCODE -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* PINCODE</label>
+                                            <input type="text" name="applicant_pincode" placeholder="Enter Pincode Name">
+                                        </div>
+                                    </div>
+                                    <!-- Nice Select -->
+                                    <div class="col-lg-12">
+                                        <div class="single-form">
+                                            <label>* HIGHEST QUALIFICATION </label>
+                                            <div class="select-option mb-10">
+                                                <select name="applicant_highest_qualification" id="select1">
+                                                    <option value="Choose_Highest_Qualification">Choose Highest Qualification</option>
+                                                    <option value="post_graduate">Post Graduate</option>
+                                                    <option value="graduate">Graduate</option>
+                                                    <option value="higher_secondary">Higher Secondary</option>
+                                                    <option value="high_school">High School</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                     <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* MARKS OBTAINED IN YOUR HIGHEST QUALIFICATION</label>
+                                            <input type="text" name="applicant_marks_highest_qualification" placeholder="Enter Marks In Percent">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* MARKS OBTAINED IN HIGHER SECONDARY</label>
+                                            <input type="text" name="applicant_marks_hse" placeholder="Enter Marks In Percent">
+                                        </div>
+                                    </div>
+                                     <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* MARKS OBTAINED IN HIGH SCHOOL</label>
+                                            <input type="text" name="applicant_marks_sslc" placeholder="Enter Marks In Percent">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* ACCOUNT NUMBER</label>
+                                            <input type="text" name="applicant_account_number" placeholder="Enter account number">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* IFSC CODE OF YOUR BANK</label>
+                                            <input type="text" name="applicant_ifsc_code" placeholder="Enter IFSC Code">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* BANK NAME</label>
+                                            <input type="text" name="applicant_bank_name" placeholder="Enter Bank Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* BANK BRANCH NAME</label>
+                                            <input type="text" name="applicant_bank_branch_name" placeholder="Enter Branch Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* PASSPORT SIZE PHOTO OF APPLICANT</label>
+                                            <input type="file" name="applicant_photo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* AADHAAR CARD OF APPLICANT</label>
+                                            <input type="file" name="applicant_aadhaar" >
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* INCOME CERTIFICATE</label>
+                                            <input type="file" name="applicant_income_certificate">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* PAN CARD</label>
+                                            <input type="file" name="applicant_pancard">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* RATION CARD</label>
+                                            <input type="file" name="applicant_ration_card">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Bank Passbook</label>
+                                            <input type="file" name="applicant_bank_passbook">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Any ID proof (driving license/election id/aadhaar)</label>
+                                            <input type="file" name="applicant_any_id">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* BIRTH CERTIFICATE</label>
+                                            <input type="file" name="applicant_birth_certificate">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* SSLC CERTIFICATE</label>
+                                            <input type="file" name="applicant_sslc_certificate">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* PLUS 2 CERTIFICATE</label>
+                                            <input type="file" name="applicant_plus2_certificate">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* CERTIFICATE OF HIGHEST QUALIFICATION</label>
+                                            <input type="file" name="applicant_highest_qualification_certificate">
+                                        </div>
+                                    </div><br><br>
+                                    <!--  Co-Applicant Details -->
+
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>CO-APPLICANT DETAILS</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="single-form">
+                                            <label>* GENDER</label>
+                                            <div class="select-option mb-10">
+                                                <select name="co-applicant_gender" id="select1">
+                                                    <option value="choose_option">Choose Option</option>
+                                                    <option value="male">Male</option>
+                                                    <option value="female">Female</option>
+                                                    <option value="other">Other</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div><br><br>
+                                    <!-- First Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                             <label>* FIRST NAME</label>
+                                             <input type="text" name="co-applicant_first_name" placeholder="Enter name">
+                                        </div>
+                                     </div>
+                                     <!-- Last Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                             <label>* LAST NAME</label>
+                                             <input type="text" name="co-applicant_last_name" placeholder="Enter name">
+                                        </div>
+                                     </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Email Address</label>
+                                            <input type="email" name="co-applicant_email" placeholder="Enter email">
+                                        </div>
+                                    </div>
+                                    <!-- Last Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Phone Number</label>
+                                            <input type="text" name="co-applicant_phone_number" placeholder="Enter Number">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-12">
+                                        <div class="single-form">
+                                            <label>* RELATION WITH APPLICANT</label>
+                                            <div class="select-option mb-10">
+                                                <select name="co-applicant_relation" id="select1">
+                                                    <option value="choose_option">Choose Option</option>
+                                                    <option value="mother">Mother</option>
+                                                    <option value="father">Father</option>
+                                                    <option value="sibling">Sibling</option>
+                                                    <option value="relative">Relative</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Co- Applicant Occupation</label>
+                                            <input type="text" name="co-applicant_job" placeholder="Enter Occupation">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Co- Applicant Address</label>
+                                            <input type="text" name="co-applicant_address" placeholder="Enter Address">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* PASSPORT SIZE PHOTO OF CO-APPLICANT</label>
+                                            <input type="file" name="co-applicant_photo">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* AADHAAR CARD OF CO-APPLICANT</label>
+                                            <input type="file" name="co-applicant_aadhaar">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* TAX RECEIPT</label>
+                                            <input type="file" name="">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Co-Applicant Pan Card</label>
+                                            <input type="file" name="co-applicant_pancard">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Co-applicant Bank passbook</label>
+                                            <input type="file" name="co-applicant_bank_passbook">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Any ID proof (driving license/election id/aadhaar)</label>
+                                            <input type="file" name="co-applicant_any_id">
+                                        </div>
+                                    </div>
+                                    <!--  College Details -->
+
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>COLLEGE DETAILS</label>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+{#                                            <label>* COLLEGE</label>#}
+{#                                            <input type="text" name="" placeholder="Enter College Name">#}
+                                        </div>
+                                    </div><br><br>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* COLLEGE</label>
+                                            <input type="text" name="applicant_college_name" placeholder="Enter College Name">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* UNIVERSITY</label>
+                                            <input type="text" name="applicant_university" placeholder="Enter University Name">
+                                        </div>
+                                    </div>
+                                    <!-- Last Name -->
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* LOCATION</label>
+                                            <input type="text" name="applicant_college_location" placeholder="Enter Location of College">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* BONAFIDE CERTIFICATE for loan approval</label>
+                                            <input type="file" name="applicant_bonafide_certificate">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* FEE STRUCTURE</label>
+                                            <input type="file" name="applicant_fee_structure">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* DEMAND LETTER</label>
+                                            <input type="file" name="applicant_demand_letter">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* ENTRANCE EXAM SCORE CARD</label>
+                                            <input type="file" name="applicant_entrance_scorecard">
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-6">
+                                        <div class="single-form">
+                                            <label>* Loan Approval from Gov (Jansamrathi/Vidyalakshmi)</label>
+                                            <input type="file" name="applicant_loan_approval">
+                                        </div>
+                                    </div>
+                                </div>
+
+                            <!-- End From -->
+                            <!-- Form btn -->
+                            <button type="submit" class="btn apply-btn mt-30">APPLY NOW </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Apply Area End -->
+
+    </main>
+    <footer>
+        <!-- Footer Start-->
+        <div class="footer-area">
+            <div class="container">
+               <div class="footer-top footer-padding">
+                    <div class="row justify-content-between">
+                        <div class="col-xl-3 col-lg-4 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="single-footer-caption mb-30">
+                                    <!-- logo -->
+                                    <div class="footer-logo">
+                                        <a href="{% url 'homepage' %}"><img src="{% static 'assets/img/logo/eduinv-client(white).png' %}" alt=""></a>
+                                    </div>
+                                    <div class="footer-pera">
+                                        <p>Empowering education through innovation, one student and one investment at a time.</p>
+                                   </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 col-lg-2 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Quick Link</h4>
+                                    <ul>
+                                        <li><a href="{% url 'aboutpage' %}">About</a></li>
+{#                                        <li><a href="{% url 'investnowpage' %}">Invest Now</a></li>#}
+                                        <li><a href="{% url 'applyforloanpage' %}">Apply for loan</a></li>
+                                        <li><a href="{% url 'contactpage' %}"> Contact Us</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+{#                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">#}
+{#                            <div class="single-footer-caption mb-50">#}
+{#                                <div class="footer-tittle">#}
+{#                                    <h4>New Products</h4>#}
+{#                                    <ul>#}
+{#                                        <li><a href="#">Woman Cloth</a></li>#}
+{#                                        <li><a href="#">Fashion Accessories</a></li>#}
+{#                                        <li><a href="#">Man Accessories</a></li>#}
+{#                                        <li><a href="#">Rubber made Toys</a></li>#}
+{#                                    </ul>#}
+{#                                </div>#}
+{#                            </div>#}
+{#                        </div>#}
+                        <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
+                            <div class="single-footer-caption mb-50">
+                                <div class="footer-tittle">
+                                    <h4>Support</h4>
+                                    <ul>
+                                        <li><a href="{% url 'contactpage' %}">Your Feedback</a></li>
+                                        <li><a href="{% url 'aboutpage' %}">Terms & Conditions</a></li>
+                                        <li><a href="{% url 'aboutpage' %}"> Privacy Policy</a></li>
+                                        <li><a href="{% url 'contactpage' %}">Report a Payment Issue</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+                <div class="footer-bottom">
+                    <div class="row d-flex justify-content-between align-items-center">
+                        <div class="col-xl-9 col-lg-8">
+                            <div class="footer-copy-right">
+                                <p>
+  Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | This website is created <i class="fa fa-heart" aria-hidden="true"></i> by <a href="http://www.linkedin.com/in/alwin-k-g-b60442253" target="_blank">Alwin K G</a>
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-xl-3 col-lg-4">
+                            <!-- Footer Social -->
+                            <div class="footer-social f-right">
+                                <a href="http://www.linkedin.com/in/alwin-k-g-b60442253"><i class="fab fa-linkedin"></i></a>
+                                <a href="#"><i class="fab fa-github"></i></a>
+{#                                <a href="#"><i class="fas fa-globe"></i></a>#}
+                                <a href="#"><i class="fab fa-instagram"></i></a>
+                            </div>
+                        </div>
+                    </div>
+               </div>
+            </div>
+        </div>
+        <!-- Footer End-->
+    </footer>
+    <!-- Scroll Up -->
+    <div id="back-top" >
+        <a title="Go to Top" href="#"> <i class="fas fa-level-up-alt"></i></a>
+    </div>
+
+
+    <!-- JS here -->
+		<!-- All JS Custom Plugins Link Here here -->
+        <script src="{% static 'assets/js/vendor/modernizr-3.5.0.min.js' %}"></script>
+		<!-- Jquery, Popper, Bootstrap -->
+		<script src="{% static 'assets/js/vendor/jquery-1.12.4.min.js' %}"></script>
+        <script src="{% static 'assets/js/popper.min.js' %}"></script>
+        <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+	    <!-- Jquery Mobile Menu -->
+        <script src="{% static 'assets/js/jquery.slicknav.min.js' %}"></script>
+
+		<!-- Jquery Slick , Owl-Carousel Plugins -->
+        <script src="{% static 'assets/js/owl.carousel.min.js' %}"></script>
+        <script src="{% static 'assets/js/slick.min.js' %}"></script>
+		<!-- One Page, Animated-HeadLin -->
+        <script src="{% static 'assets/js/wow.min.js' %}"></script>
+		<script src="{% static 'assets/js/animated.headline.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.magnific-popup.js' %}"></script>
+
+		<!-- Nice-select, sticky -->
+        <script src="{% static 'assets/js/jquery.nice-select.min.js' %}"></script>
+		<script src="{% static 'assets/js/jquery.sticky.js' %}"></script>
+
+        <!-- contact js -->
+        <script src="{% static 'assets/js/contact.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.form.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.validate.min.js' %}"></script>
+        <script src="{% static 'assets/js/mail-script.js' %}"></script>
+        <script src="{% static 'assets/js/jquery.ajaxchimp.min.js' %}"></script>
+
+		<!-- Jquery Plugins, main Jquery -->
+        <script src="{% static 'assets/js/plugins.js' %}"></script>
+        <script src="{% static 'assets/js/main.js' %}"></script>
+        <!-- add to your apply_loan.html -->
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                const form = document.querySelector("form");
+                form.addEventListener("submit", function (e) {
+                    const loanAmount = parseFloat(document.querySelector('input[name="Applicant_loan_amount"]').value);
+                    if (loanAmount <= 0) {
+                        e.preventDefault();
+                        alert("Loan amount must be greater than zero.");
+                        return false;
+                    }
+
+                    // Example double-check: Confirm email match
+                    const email = document.querySelector('input[name="Applicant_email"]').value;
+                    const confirmEmail = document.querySelector('input[name="Confirm_email"]').value;
+                    if (email !== confirmEmail) {
+                        e.preventDefault();
+                        alert("Email addresses do not match.");
+                        return false;
+                    }
+
+                    // Add more double-checks as needed
+
+                    return true; // Proceed with form submission if all checks pass
+                });
+            });
+        </script>
+
+
+    </body>
+</html>

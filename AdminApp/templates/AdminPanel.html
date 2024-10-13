@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+{% load static %}
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+	<title>Admin-Edu.Inv</title>
+	<meta name="description" content="">
+	<!-- Mobile Specific Meta -->
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- <link rel="shortcut icon" href="img/favicon.png"> -->
+
+	<link href='http://fonts.googleapis.com/css?family=Lato:300,400,700' rel='stylesheet'>
+
+	<!-- Syntax Highlighter -->
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/syntax-highlighter/styles/shCore.css' %}" media="all">
+	<link rel="stylesheet" type="text/css" href="{% static 'assets/syntax-highlighter/styles/shThemeDefault.css' %}" media="all">
+
+	<!-- Font Awesome CSS-->
+	<link rel="stylesheet" href="{% static 'assets/css/font-awesome.min.css' %}">
+	<!-- Normalize/Reset CSS-->
+	<link rel="stylesheet" href="{% static 'assets/css/normalize.min.css' %}">
+	<!-- Main CSS-->
+	<link rel="stylesheet" href="{% static 'assets/css/main.css' %}">
+
+</head>
+
+<body id="welcome">
+
+	<aside class="left-sidebar" style="color: deepskyblue;">
+		<div class="logo" style="color: deepskyblue;">
+			<a href="{% url 'Adminpanelpage' %}">
+				<h1>Admin-Edu.Inv</h1>
+			</a>
+		</div>
+		<nav class="left-nav" style="color: deepskyblue;">
+			<ul id="nav">
+				<li><a href="{% url 'Adminpanelpage' %}">Welcome</a></li>
+				<li><a href="{% url 'displayclientsignup' %}">Clients</a></li>
+				<li><a href="{% url 'displayinvestorsignup' %}">Investors</a></li>
+				<li><a href="{% url 'displaycontact' %}">Contact</a></li>
+				<li><a href="{% url 'displayloanapplications' %}">Client Details</a></li>
+				<li><a href="{% url 'displayinvestordetails' %}">Investor Details</a></li>
+			</ul>
+		</nav>
+	</aside>
+
+	<div id="main-wrapper">
+		<div class="main-content">
+			<section id="welcome">
+				<div class="content-header">
+					<h1>Admin-Edu.Inv</h1>
+				</div>
+				<div class="welcome">
+					<h2 class="twenty">Welcome Back To Edu.Inv-Admin</h2>
+
+				</div>
+
+			</section>
+
+			<section id="installation">
+				<div class="content-header">
+					<h1>Database Details of Edu.Inv</h1>
+				</div>
+			</section>
+{% block content %}
+
+
+
+        {% endblock %}
+
+      <section id="credit">
+
+      	<div class="script-source">
+      	</div>
+      </section>
+  </div>
+</div>
+
+
+		<!-- Essential JavaScript Libraries
+			==============================================-->
+			<script type="text/javascript" src="{% static 'assets/js/jquery-1.11.0.min.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/js/jquery.nav.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/syntax-highlighter/scripts/shCore.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/syntax-highlighter/scripts/shBrushXml.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/syntax-highlighter/scripts/shBrushCss.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/syntax-highlighter/scripts/shBrushJScript.js' %}"></script>
+			<script type="text/javascript" src="{% static 'assets/syntax-highlighter/scripts/shBrushPhp.js' %}"></script>
+			<script type="text/javascript">
+				SyntaxHighlighter.all()
+			</script>
+{#			<script type="text/javascript" src="{% static 'assets/js/custom.js' %}"></script>#}
+
+		</body>
+		</html>

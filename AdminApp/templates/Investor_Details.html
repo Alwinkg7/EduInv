@@ -1,0 +1,108 @@
+{% extends 'AdminPanel.html' %}
+{% block content %}
+<section id="tmpl-structure">
+    <h2 class="title">Investors details</h2>
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="table-responsive pt-3">
+                    <table class="table table-dark">
+                        <thead>
+                            <tr>
+                                <th>Investor First Name</th>
+                                <th></th>
+                                <th></th>
+                                <th>Investor last Name</th>
+                                <th></th>
+                                <th></th>
+                                <th>Investor Email</th>
+                                <th></th>
+                                <th></th>
+                                <th>Nominee First name</th>
+                                <th></th>
+                                <th></th>
+                                <th>Nominee last Name</th>
+                                <th></th>
+                                <th></th>
+                                <th>Investor Phone Number</th>
+                                <th></th>
+                                <th></th>
+                                <th>Nominee Phone Number</th>
+                                <th></th>
+                                <th></th>
+                                <th>Investor Address</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for investordetail in investor_detailsdata %}
+                            <tr>
+                                <td>{{ investordetail.Investor_first_name }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ investordetail.Investor_last_name }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ investordetail.Investor_email }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ investordetail.Nominee_first_name }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ investordetail.Nominee_last_name }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ investordetail.Investor_phone }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ investordetail.Nominee_phone }}</td>
+                                <td></td>
+                                <td></td>
+                                <td>{{ investordetail.Investor_adress }}</td>
+                                <td>
+                                    <form method="post" action="{% url 'approve_investor' investordetail.id %}">
+                                        {% csrf_token %}
+                                        <button type="submit">Approve/Disapprove</button>
+                                    </form>
+                                </td>
+
+                                <td>
+                                    <form href="{% url 'deleteinvestdata' dataid=investordetail.id %}"><button type="submit">Delete</button></form>
+                                </td>
+                            </tr>
+                                {% empty %}
+                            <tr>
+                                <td colspan="5">No investors found.</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Bootstrap Modal -->
+<div class="modal fade" id="actionModal" tabindex="-1" aria-labelledby="actionModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="actionModalLabel">Investor approved</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- This content will be updated dynamically -->
+        <p id="modalMessage"></p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>

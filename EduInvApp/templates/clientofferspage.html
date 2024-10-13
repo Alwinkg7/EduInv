@@ -1,0 +1,35 @@
+{% extends "Client.html" %}
+
+
+{% block content %}
+<h1>Welcome, {{ client.Applicant_first_name }}</h1>
+        <p>Email: {{ client.Applicant_email }}</p>
+
+<p>Your application has been approved, and the following offers are available:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Investor</th>
+            <th>Amount</th>
+            <th>Interest Rate</th>
+            <th>Duration</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for offer in offers %}
+        <tr>
+            <td>{{ offer.investor }}</td>
+            <td>{{ offer.amount }}</td>
+            <td>{{ offer.interest_rate }}</td>
+            <td>{{ offer.duration }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No offers available yet.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}
