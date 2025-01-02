@@ -8,7 +8,7 @@
         <title>Edu.Inv_Investor</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="manifest" href="{% static 'site.webmanifest' %}">
+{#        <link rel="manifest" href="{% static 'site.webmanifest' %}">#}
 		<link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
 
 		<!-- CSS here -->
@@ -23,6 +23,8 @@
             <link rel="stylesheet" href="{% static '/assets/css/slick.css' %}">
             <link rel="stylesheet" href="{% static '/assets/css/nice-select.css' %}">
             <link rel="stylesheet" href="{% static '/assets/css/style.css' %}">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+
    </head>
 
    <body>
@@ -60,6 +62,7 @@
                                         <ul id="navigation">
                                             <li class="active"><a href="{% url 'investorpage' %}">Home</a></li>
                                             <li><a href="{% url 'aboutpage' %}">About</a></li>
+                                            <li><a href="{% url 'investor_login' %}">Investor login</a></li>
                                             <li><a href="{% url 'userlogoutpageinvestor' %}">Log Out</a></li>
                                             <li><a href="{% url 'contactpage' %}">Contact</a></li>
                                         </ul>
@@ -107,21 +110,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Single Slider -->
-{#                <div class="single-slider">#}
-{#                    <div class="slider-cap-wrapper">#}
-{#                        <div class="hero__caption">#}
-{#                            <p data-animation="fadeInLeft" data-delay=".2s">Achieve your financial goal</p>#}
-{#                            <h1 data-animation="fadeInLeft" data-delay=".5s">Small Business Loans For Daily Expenses.</h1>#}
-{#                            <!-- Hero Btn -->#}
-{#                            <a href="apply.html" class="btn hero-btn" data-animation="fadeInLeft" data-delay=".8s">Apply for Loan</a>#}
-{#                        </div>#}
-{#                        <div class="hero__img">#}
-{#                            <img src="{% static '/assets/img/hero/hero_img2.jpg' %}" alt="">#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
             </div>
             <!-- slider-footer Start -->
             <div class="slider-footer section-bg d-none d-sm-block">
@@ -171,23 +159,26 @@
         <div class="about-low-area section-padding">
             <div class="container">
                 <div class="section-top-border">
-                    <h3 class="mb-30">Students Catalogue</h3>
+                    <h3 class="mb-30">Available Loan Applicants</h3>
                     <div class="table-hover">
                         <table class="table">
                             <thead>
                                 <tr>
                                     <th>Applicant Name</th>
-                                    <th>Email</th>
-                                    <th>Loan Amount</th>
-                                    <th>Details</th>
+                                    <th>Amount Requested</th>
+                                    <th>Qualification</th>
+                                    <th>Marks in Highest Qualification</th>
+                                    <th>College Name</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for applicant in approved_applicants %}
                                 <tr>
                                     <td>{{ applicant.Applicant_first_name }} {{ applicant.Applicant_last_name }}</td>
-                                    <td>{{ applicant.Applicant_email }}</td>
                                     <td>{{ applicant.Applicant_loan_amount }}</td>
+                                    <td>{{ applicant.Applicant_highest_qualification }}</td>
+                                    <td>{{ applicant.Applicant_marks_highest_qualification }}</td>
+                                    <td>{{ applicant.Applicant_college_name }}</td>
                                     <td><a class="btn-light" href="{% url 'applicant_details' applicant.id %}">View Details</a></td>
                                 </tr>
                                 {% empty %}
@@ -201,46 +192,8 @@
                 </div>
             </div>
         </div>
-        <!-- slider Area End-->
-        <!-- About Law Start-->
 
-        <div class="about-low-area section-padding2">
-            <h1 class="mb-30">Top Investors</h1>
-            <div class="progress-table-wrap">
-                <div class="progress-table">
-                    <div class="table-head">
-                        <table class="table table-bordered mt-3">
-                            <thead>
-                                <tr>
-                                    <th>Rank</th>
-                                    <th>Investor Name</th>
-                                    <th>Email</th>
-                                    <th>Total Investment</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {% for investor in investors %}
-                                <tr>
-                                    <td>{{ forloop.counter }}</td>  <!-- Rank -->
-                                    <td>{{ investor.name }}</td>  <!-- Investor Name -->
-                                    <td>{{ investor.email }}</td>  <!-- Investor Email -->
-                                    <td>${{ investor.total_investment }}</td>  <!-- Total Investment -->
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="4">No investors found.</td>
-                                </tr>
-                                {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <!-- About Law End-->
-        <!-- Services Area Start -->
-        <!-- Team Ara End -->
-        <!-- Testimonial Start -->
+
 
         <div class="testimonial-area t-bg testimonial-padding">
             <div class="container ">
@@ -268,78 +221,14 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- Single Testimonial -->
-{#                            <div class="single-testimonial text-center">#}
-{#                                 <!-- Testimonial Content -->#}
-{#                                <div class="testimonial-caption ">#}
-{#                                    <div class="testimonial-top-cap">#}
-{#                                        <img src="{% static '/assets/img/gallery/testimonial.png' %}" alt="">#}
-{#                                        <p>Logisti Group is a representative logistics operator providing full range of ser#}
-{#                                            of customs clearance and transportation worl.</p>#}
-{#                                    </div>#}
-{#                                    <!-- founder -->#}
-{#                                    <div class="testimonial-founder d-flex align-items-center justify-content-center">#}
-{#                                        <div class="founder-img">#}
-{#                                            <img src="{% static '/assets/img/testmonial/Homepage_testi.png' %}" alt="">#}
-{#                                        </div>#}
-{#                                       <div class="founder-text">#}
-{#                                            <span>Jessya Inn</span>#}
-{#                                            <p>Co Founder</p>#}
-{#                                       </div>#}
-{#                                    </div>#}
-{#                                </div>#}
-{#                            </div>#}
+
                         </div>
                     </div>
                </div>
             </div>
         </div>
         <!-- Testimonial End -->
-        <!-- Blog Ara Start -->
-{#        <div class="home-blog-area section-padding30">#}
-{#            <div class="container">#}
-{#                <div class="row justify-content-center">#}
-{#                    <div class="col-lg-7 col-md-10">#}
-{#                        <!-- Section Tittle -->#}
-{#                        <div class="section-tittle text-center mb-70">#}
-{#                            <span>News form our latest blog</span>#}
-{#                            <h2>News from around the world selected by us.</h2>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#                <div class="row">#}
-{#                    <div class="col-xl-6 col-lg-6 col-md-6">#}
-{#                        <!-- single-david -->#}
-{#                        <div class="single-blogs mb-30">#}
-{#                            <div class="blog-images">#}
-{#                                <img src="{% static '/assets/img/gallery/blog1.png' %}" alt="">#}
-{#                            </div>#}
-{#                            <div class="blog-captions">#}
-{#                                <span>January 28, 2020</span>#}
-{#                                <h2><a href="blog_details.html">The advent of pesticides brought#}
-{#                                    in its benefits and pitfalls.</a></h2>#}
-{#                                <p>October 6, a2020by Steve</p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                    <div class="col-xl-6 col-lg-6 col-md-6">#}
-{#                        <!-- single-david -->#}
-{#                        <div class="single-blogs mb-30">#}
-{#                            <div class="blog-images">#}
-{#                                <img src="{% static '/assets/img/gallery/blog2.png' %}" alt="">#}
-{#                            </div>#}
-{#                            <div class="blog-captions">#}
-{#                                <span>January 28, 2020</span>#}
-{#                                <h2><a href="blog_details.html">The advent of pesticides brought#}
-{#                                    in its benefits and pitfalls.</a></h2>#}
-{#                                <p>October 6, a2020by Steve</p>#}
-{#                            </div>#}
-{#                        </div>#}
-{#                    </div>#}
-{#                </div>#}
-{#            </div>#}
-{#        </div>#}
-        <!-- Blog Ara End -->
+
 
     </main>
 {% endblock %}
@@ -375,19 +264,7 @@
                                 </div>
                             </div>
                         </div>
-{#                        <div class="col-xl-2 col-lg-3 col-md-4 col-sm-6">#}
-{#                            <div class="single-footer-caption mb-50">#}
-{#                                <div class="footer-tittle">#}
-{#                                    <h4>New Products</h4>#}
-{#                                    <ul>#}
-{#                                        <li><a href="#">Woman Cloth</a></li>#}
-{#                                        <li><a href="#">Fashion Accessories</a></li>#}
-{#                                        <li><a href="#">Man Accessories</a></li>#}
-{#                                        <li><a href="#">Rubber made Toys</a></li>#}
-{#                                    </ul>#}
-{#                                </div>#}
-{#                            </div>#}
-{#                        </div>#}
+
                         <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6">
                             <div class="single-footer-caption mb-50">
                                 <div class="footer-tittle">
@@ -467,6 +344,14 @@
 		<!-- Jquery Plugins, main Jquery -->
         <script src="{% static '/assets/js/plugins.js' %}"></script>
         <script src="{% static '/assets/js/main.js' %}"></script>
-
+        <script>
+            window.onload = function() {
+                // Check if an alert message exists
+                var alertMessage = "{{ alert_message }}";
+                if (alertMessage) {
+                    alert(alertMessage);  // Show a pop-up alert
+                }
+            };
+        </script>
     </body>
 </html>

@@ -23,6 +23,8 @@
             <link rel="stylesheet" href="{% static '/assets/css/slick.css' %}">
             <link rel="stylesheet" href="{% static '/assets/css/nice-select.css' %}">
             <link rel="stylesheet" href="{% static '/assets/css/style.css' %}">
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> <!-- Include Chart.js -->
+
    </head>
 
    <body>
@@ -177,7 +179,9 @@
             <div class="progress-table-wrap">
                 <div class="progress-table">
                     <div class="table-head">
-                        <table class="table table-bordered mt-3">
+
+                        <canvas id="topInvestorsChart" width="1" height="1"></canvas>
+                        <table id="topInvestorsTable" class="table table-striped table-bordered">
                             <thead>
                                 <tr>
                                     <th>Rank</th>
@@ -186,15 +190,11 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {% for investor in investors %}
+                                {% for investor in top_investors %}
                                 <tr>
-                                    <td>{{ forloop.counter }}</td>  <!-- Rank -->
-                                    <td>{{ investor.name }}</td>  <!-- Investor Name -->
-                                    <td>${{ investor.total_investment }}</td>  <!-- Total Investment -->
-                                </tr>
-                                {% empty %}
-                                <tr>
-                                    <td colspan="4">No investors found.</td>
+                                    <td>{{ forloop.counter }}</td>
+                                    <td>{{ investor.Investor_first_name }} {{ investor.Investor_last_name }}</td>
+                                    <td>{{ investor.total_investment }}</td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
@@ -215,9 +215,11 @@
                                 <span>About Edu.Inv</span>
                                 <h2>Edu.Inv: Empowering education, one investment at a time.</h2>
                             </div>
-                            <p>Welcome to Edu.Inv, where we connect talented students with investors who believe in the power of education. Our platform helps students overcome financial barriers by offering tailored loans, while investors earn returns and make a positive impact. At Edu.Inv, we prioritize transparency and accessibility, making it easy for students to pursue their dreams and for investors to support education.</p>
+                            <p>Welcome to Edu.Inv, where we connect talented students with investors who believe in the power of education. Our platform helps students overcome financial barriers by offering tailored loans,
+                                while investors earn returns and make a positive impact. At Edu.Inv, we prioritize transparency and accessibility, making it easy for students to pursue their dreams and for investors to support education.</p>
                             <p>Together, we’re building a brighter future, one student at a time.</p>
-                            <a href="{% url 'clientsignuppage' %}" class="btn">Apply for Loan</a>&nbsp; &nbsp;<a href="{% url 'investorsignuppage' %}" class="btn">Invest Now</a>
+                            <a href="{% url 'clientsignuppage' %}" class="btn">Apply for Loan</a>&nbsp; &nbsp;
+                            <a href="{% url 'investorsignuppage' %}" class="btn">Invest Now</a>
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12">
@@ -498,29 +500,5 @@
 		<!-- Jquery Plugins, main Jquery -->
         <script src="{% static '/assets/js/plugins.js' %}"></script>
         <script src="{% static '/assets/js/main.js' %}"></script>
-        <canvas id="topInvestorsChart" width="400" height="200"></canvas>
-            <script>
-                var ctx = document.getElementById('topInvestorsChart').getContext('2d');
-                var topInvestorsChart = new Chart(ctx, {
-                    type: 'bar',
-                    data: {
-                        labels: [{% for investor in investors %}'{{ investor.name }}',{% endfor %}],  // Investor names
-                        datasets: [{
-                            label: 'Total Investment',
-                            data: [{% for investor in investors %}{{ investor.total_investment }},{% endfor %}],  // Investment amounts
-                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                            borderColor: 'rgba(75, 192, 192, 1)',
-                            borderWidth: 1
-                        }]
-                    },
-                    options: {
-                        scales: {
-                            y: {
-                                beginAtZero: true
-                            }
-                        }
-                    }
-                });
-            </script>
     </body>
 </html>

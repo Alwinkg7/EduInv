@@ -78,7 +78,7 @@ def displayinvestorsignup(request):
 # Display Investor details
 def displayinvestordetails(request):
     investor_details = investorapplicationdb.objects.all()
-    return render(request, "Investor_Details.html", {'investor_detailsdata': investor_details})
+    return render(request, "Investor_Details.html", {'investordetailsdata': investor_details})
 
 # Display Applicant details
 def displayloanapplications(request):
@@ -88,6 +88,10 @@ def displayloanapplications(request):
 def applicantdetails(request, applicant_id):
     applicant = get_object_or_404(loanapplicationdb, id=applicant_id)
     return render(request, 'approve_applicant.html', {'applicant': applicant})
+
+def investordetails(request, investor_id):
+    investor = get_object_or_404(investorapplicationdb, id=investor_id)
+    return render(request, 'approve_investor.html', {'investor': investor})
 
 def deleteloandata(request,dataid):
     data = loanapplicationdb.objects.filter(id=dataid)

@@ -6,31 +6,153 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive pt-3">
-                    <h2>Approve Investor: {{ investor.name }}</h2> <!-- Display investor details as needed -->
                     <form method="post" action="{% url 'approve_investor' investor.id %}">
                         {% csrf_token %}
-                        <div>
-                            <h4 class="table-hover">Applicant details</h4><br>
-                            <p><strong>Investor First Name:</strong> {{ investor.Investor_first_name }}</p>
-                            <p><strong>Investor Last Name:</strong> {{ investor.Investor_last_name }}</p>
-                            <p><strong>Investor Email:</strong> {{ investor.Investor_email }}</p>
-                            <p><strong>Investor Phone:</strong> {{ investor.Investor_phone }}</p>
-                            <p><strong>Nominee First Name:</strong> {{ investor.Nominee_first_name }}</p>
-                            <p><strong>Nominee Last Name:</strong> {{ investor.Nominee_last_name }}</p>
-                            <p><strong>Nominee Phone:</strong> {{ investor.Nominee_phone }}</p>
-                            <p><strong>Investor Address:</strong> {{ investor.Investor_adress }}</p><br>
-                        </div>
+                        <h4 class="table-hover">Investor Information</h4><br>
+                        <table class="table table-bordered custom-table">
+                            <!-- Investor Details -->
+                            <tr>
+                                <th colspan="2" class="text-center">Investor Details</th>
+                            </tr>
+                            <tr>
+                                <th>Investor First Name:</th>
+                                <td>{{ investor.Investor_first_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Investor Last Name:</th>
+                                <td>{{ investor.Investor_last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Investor Email:</th>
+                                <td>{{ investor.Investor_email }}</td>
+                            </tr>
+                            <tr>
+                                <th>Investor Phone:</th>
+                                <td>{{ investor.Investor_phone }}</td>
+                            </tr>
+                            <tr>
+                                <th>Investor Address:</th>
+                                <td>{{ investor.Investor_adress }}</td>
+                            </tr>
 
-                        <div>
-                            <button type="submit" name="approve">Approve</button>
-                            <button type="submit" name="disapprove">Disapprove</button>
-                            <a href="{% url 'displayinvestordetails' %}">Cancel</a>
+                            <!-- Nominee Details -->
+                            <tr>
+                                <th colspan="2" class="text-center">Nominee Details</th>
+                            </tr>
+                            <tr>
+                                <th>Nominee First Name:</th>
+                                <td>{{ investor.Nominee_first_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nominee Last Name:</th>
+                                <td>{{ investor.Nominee_last_name }}</td>
+                            </tr>
+                            <tr>
+                                <th>Nominee Phone:</th>
+                                <td>{{ investor.Nominee_phone }}</td>
+                            </tr>
+
+                            <!-- Document Uploads -->
+                            <tr>
+                                <th colspan="2" class="text-center">Document Uploads</th>
+                            </tr>
+                            <tr>
+                                <th>Investor Passport Size Photo:</th>
+                                <td>
+                                    {% if investor.Investor_photo %}
+                                        <img src="{{ investor.Investor_photo.url }}" height="75px" width="75px" alt="Investor Photo">
+                                    {% else %}
+                                        No photo uploaded
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Investor PAN Card:</th>
+                                <td>
+                                    {% if investor.Investor_pan %}
+                                        <img src="{{ investor.Investor_pan.url }}" height="75px" width="75px" alt="Investor PAN Card">
+                                    {% else %}
+                                        No PAN card uploaded
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Investor Aadhaar Card:</th>
+                                <td>
+                                    {% if investor.Investor_adhaar %}
+                                        <img src="{{ investor.Investor_adhaar.url }}" height="75px" width="75px" alt="Investor Aadhaar Card">
+                                    {% else %}
+                                        No Aadhaar card uploaded
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Investor Bank Statement:</th>
+                                <td>
+                                    {% if investor.Investor_bank_statement %}
+                                        <img src="{{ investor.Investor_bank_statement.url }}" height="75px" width="75px" alt="Investor Bank Statement">
+                                    {% else %}
+                                        No bank statement uploaded
+                                    {% endif %}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>Investor Bank Passbook:</th>
+                                <td>
+                                    {% if investor.Investor_bank_pass %}
+                                        <img src="{{ investor.Investor_bank_pass.url }}" height="75px" width="75px" alt="Investor Bank Passbook">
+                                    {% else %}
+                                        No bank passbook uploaded
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        </table>
+                        <br><br><br>
+                        <div class="mt-3" style="padding: 50px;">
+                            <button type="submit" name="approve" value="approve" class="btn custom-btn">Approve</button>
+                            <button type="submit" name="disapprove" value="disapprove" class="btn custom-btn">Disapprove</button>
+                            <button type="button" onclick="window.location.href='{% url 'displayinvestordetails' %}'" class="btn custom-btn">Cancel</button>
                         </div>
+                    <style>
+        .custom-btn {
+            color: deepskyblue; /* Blue text */
+            border: 2px solid blue; /* Blue border */
+            background-color: transparent;
+            padding: 8px 16px;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .custom-btn:hover {
+            background-color: #0055aa; /* Blue background on hover */
+            color: white; /* White text on hover */
+        }
+    </style>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </section>
+    <style>
+    .custom-table {
+        width: 90%; /* Adjust width as needed */
+        margin: auto;
+        border-collapse: collapse;
+        border: 2px solid blue; /* Blue border */
+    }
+
+    .custom-table th, .custom-table td {
+        border: 2px solid blue; /* Blue border for cells */
+        padding: 10px;
+        text-align: left;
+    }
+
+    .custom-table th {
+        background-color: #e0f7ff; /* Light blue background for header cells */
+        color: #0055aa; /* Dark blue text */
+    }
+</style>
 {% endblock %}
 

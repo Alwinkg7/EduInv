@@ -6,82 +6,76 @@
         <div class="card">
             <div class="card-body">
                 <div class="table-responsive pt-3">
-                    <table class="table table-dark">
+<style>
+    .table-bordered-blue {
+        border: 2px solid blue;
+    }
+    .table-bordered-blue th,
+    .table-bordered-blue td {
+        border: 1px solid blue;
+        padding: 5px;
+    }
+</style>
+
+                    <table class="table table-dark table-bordered-blue">
                         <thead>
                             <tr>
                                 <th>Applicant First Name</th>
-                                <th></th>
-                                <th></th>
-                                <th>Applicant last Name</th>
-                                <th></th>
-                                <th></th>
+                                <th>Applicant Last Name</th>
                                 <th>Applicant Email</th>
-                                <th></th>
-                                <th></th>
-                                <th>Applicant Loan Amount</th>
-                                <th></th>
-                                <th></th>
-                                <th>Applicant Gender</th>
-                                <th></th>
-                                <th></th>
-                                <th>Applicant Date Of Birth</th>
-                                <th></th>
-                                <th></th>
-                                <th>Applicant Highest Qualification</th>
-                                <th></th>
-                                <th></th>
-                                <th>Applicant College Name</th>
-                                <th></th>
-                                <th></th>
-                                <th>Applicant College University</th>
-                                <th></th>
-                                <th></th>
-                                <th>Applicant College Location</th>
-                                <th></th>
-
-
+                                <th>Loan Amount</th>
+                                <th>Gender</th>
+                                <th>Date of Birth</th>
+                                <th>Highest Qualification</th>
+                                <th>College Name</th>
+                                <th>University</th>
+                                <th>College Location</th>
+                                <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            {% for applicants in loanapplicationsdata %}
+                            {% for applicant in loanapplicationsdata %}
                             <tr>
-                                <td>{{ applicants.Applicant_first_name }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_last_name }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_email }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_loan_amount }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_gender }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_dob }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_highest_qualification }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_college_name }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_university }}</td>
-                                <td></td>
-                                <td></td>
-                                <td>{{ applicants.Applicant_college_location }}</td>
+                                <td>{{ applicant.Applicant_first_name }}</td>
+                                <td>{{ applicant.Applicant_last_name }}</td>
+                                <td>{{ applicant.Applicant_email }}</td>
+                                <td>{{ applicant.Applicant_loan_amount }}</td>
+                                <td>{{ applicant.Applicant_gender }}</td>
+                                <td>{{ applicant.Applicant_dob }}</td>
+                                <td>{{ applicant.Applicant_highest_qualification }}</td>
+                                <td>{{ applicant.Applicant_college_name }}</td>
+                                <td>{{ applicant.Applicant_university }}</td>
+                                <td>{{ applicant.Applicant_college_location }}</td>
                                 <td>
-                                    <form method="post" action="{% url 'approve_applicant' applicants.id %}">
-                                    {% csrf_token %}
-                                         <a href="{% url 'applicantdetails' applicants.id %}">See Details</a>
-                                    <button type="submit">Approve/Disapprove</button></form>
-                                </td>
-                                <td>
-                                    <a href="{% url 'deleteloandata' dataid=applicants.id %}"><button type="submit">Delete</button></a>
+                                    <form method="post" action="{% url 'approve_applicant' applicant.id %}">
+                                        {% csrf_token %}
+                                        <a href="{% url 'applicantdetails' applicant.id %}" class="btn custom-link-btn">See Details</a>
 
+<!-- CSS Styles -->
+<style>
+    .custom-link-btn {
+        display: inline-block;
+        color: #0055aa; /* Blue text */
+        border: 2px solid #0055aa; /* Blue border */
+        background-color: transparent;
+        padding: 8px 16px;
+        font-weight: bold;
+        border-radius: 5px;
+        text-decoration: none; /* Remove underline */
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .custom-link-btn:hover {
+        background-color: #0055aa; /* Blue background on hover */
+        color: white; /* White text on hover */
+    }
+</style>
+
+{#                                        <button type="submit">Approve/Disapprove</button>#}
+                                    </form>
+{#                                    <a href="{% url 'deleteloandata' dataid=applicant.id %}">#}
+{#                                        <button type="button">Delete</button>#}
+{#                                    </a>#}
                                 </td>
                             </tr>
                             {% endfor %}
@@ -92,4 +86,5 @@
         </div>
     </div>
 </section>
+
 {% endblock %}

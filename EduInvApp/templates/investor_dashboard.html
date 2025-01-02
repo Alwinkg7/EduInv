@@ -2,9 +2,9 @@
 {% load static %}
 
 {% block content %}
-     <div class="container mt-5">
-        <h1>Welcome, {{ investor_name }}</h1>
-        <h3>Available Loan Applicants</h3>
+     <div class="container mt-5"><br><br>
+        <h1>Welcome, {{ investor_name }}</h1><br><br>
+        <h3>Available Loan Applicants</h3><br><br>
 
         <table class="table table-bordered mt-3">
             <thead>
@@ -18,14 +18,14 @@
                 </tr>
             </thead>
             <tbody>
-                {% for applicant in applicants %}
+                {% for applicant in approved_applicants %}
                 <tr>
                     <td>{{ applicant.Applicant_first_name }} {{ applicant.Applicant_last_name }}</td>
                     <td>{{ applicant.Applicant_loan_amount }}</td>
-                    <td>{{ applicant.Applicant_highest_qualification }}%</td>
+                    <td>{{ applicant.Applicant_highest_qualification }}</td>
                     <td>{{ applicant.Applicant_marks_highest_qualification }}</td>
                     <td>{{ applicant.Applicant_college_name }}</td>
-                    <td>{{ applicant.Applicant_entrance_scorecard }}</td>
+                    <td><img src="{{ applicant.Applicant_entrance_scorecard.url }}" height="100px" width="100px" alt=""></td>
                     <td>
                         <!-- Link to view details of the applicant -->
                         <a href="{% url 'applicant_details' applicant.id %}" class="btn btn-primary btn-sm">View Details</a>
@@ -53,7 +53,12 @@
                 {% endfor %}
             </tbody>
         </table>
+
+
     </div>
 
-{#    <script src="{% static 'assets/js/bootstrap.bundle.min.js' %}"></script>#}
+    <br><br><br>
+    <br><br>
+    <br><br>
+    <br><br>
 {% endblock %}

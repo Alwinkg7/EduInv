@@ -21,7 +21,13 @@ from .models import loanapplicationdb, Offer  # Adjust import according to your 
 # Create your views here.
 # Webpages
 def homepage(request):
-    return render(request, "home.html")
+    # Fetch the top investors ordered by total investment
+    top_investors = investorapplicationdb.objects.order_by('-total_investment')[:5]  # Fetch top 5 investors
+
+    context = {
+        'top_investors': top_investors
+    }
+    return render(request, 'home.html', context)
 
 def aboutpage(request):
     return render(request, "about.html")
@@ -66,10 +72,37 @@ def applyforloanpage(request):
     return render(request, "ApplyForLoan.html")
 
 def investorpage(request):
-    # Fetch approved applicants
+    # Check if the investor is logged in
+    if 'investor_id' not in request.session:
+        return redirect('investor_login')  # Redirect to investor login page if not logged in
+
+        # Fetch investor ID from session
+    investor_id = request.session.get('investor_id')
+
+    # Get the investor details from the database
+    investor = get_object_or_404(investorapplicationdb, id=investor_id)
+
+    # Fetch offers made by this specific investor
+    offers = Offer.objects.filter(investor=investor)
+
+    # Get the list of approved loan applicants who haven't received offers from this investor
     approved_applicants = loanapplicationdb.objects.filter(is_approved=True)
 
-    return render(request, "Investor.html", {'approved_applicants': approved_applicants})
+    # Debugging information
+    print(f"Investor: {investor}")
+    print(f"Offers: {offers}")
+    print(f"Approved Applicants: {approved_applicants}")
+
+    # Pass both the investor name, applicants list, and offers to the template
+    context = {
+        'investor_name': f"{investor.Investor_first_name} {investor.Investor_last_name}",
+        'approved_applicants': approved_applicants,
+        'offers': offers
+    }
+
+
+    return render(request, "Investor.html", context)
+
 
 def investnowpage(request):
     return render(request, "Investnow.html")
@@ -122,25 +155,16 @@ def savedatasignuppageinvestor(request):
 
 def userloginpageclient(request):
     if request.method == "POST":
+        username_r = request.POST.get('username')
         useremail_r = request.POST.get('useremail')
         userpassword_r = request.POST.get('userpassword')
-
-        # Basic validation
-        if not useremail_r or not userpassword_r:
-            return HttpResponse("Email and password are required.")
-
-        try:
-            client = clientsignupdb.objects.get(clientemail=useremail_r, clientpassword=userpassword_r)
-        except clientsignupdb.DoesNotExist:
-            return HttpResponse("Invalid login credentials")
-
-        # Save client_id in session
-        request.session['client_id'] = client.id
-
-        # Redirect to the clientpage with client_id
-        return redirect('clientpage')
-
-    # If not POST, redirect to the sign-up page or login page
+        if clientsignupdb.objects.filter(clientemail=useremail_r, clientpassword=userpassword_r).exists():
+            request.session['usernamel'] = username_r
+            request.session['useremaill'] = useremail_r
+            request.session['passwordl'] = userpassword_r
+            return redirect('clientpage')
+        else:
+            return redirect('clientsignuppage')
     return redirect('clientsignuppage')
 
 def userloginpageinvestor(request):
@@ -160,9 +184,9 @@ def userloginpageinvestor(request):
 # Log out/ Sign out
 
 def userlogoutpageclient(request):
-    del request.session['usernamel']
+    # del request.session['usernamel']
     del request.session['useremaill']
-    del request.session['password']
+    del request.session['passwordl']
     return redirect('homepage')
 
 def userlogoutpageinvestor(request):
@@ -323,9 +347,9 @@ def saveapplicantloan(request):
             Applicant_loan_approval=applicantloanapproval
         )
         obj.save()
-        return redirect('applyforloanpage')
+        return render(request,'Client.html',{'alert_message': 'Registration complete'})
     else:
-        return HttpResponse("Invalid request")
+        return render(request, 'Client.html', {'alert_message': 'Invalid request'})
 
 
 # Save investor application
@@ -347,8 +371,8 @@ def saveinvestorapplication(request):
         Investorbankpass = request.FILES.get('investor_bank_pass')
         obj = investorapplicationdb(Investor_first_name=Investorfirstname, Investor_last_name=Investorlastname, Investor_email=Investoremail, Nominee_first_name=Nomineefirstname, Nominee_last_name=Nomineelastname, Investor_adress=Investoraddress, Investor_phone=Investorphone, Nominee_phone=Nomineephone, Investor_photo=Investorphoto, Investor_pan=Investorpan, Investor_adhaar=Investoraadhaar, Investor_bank_statement=Investorbankstatement, Investor_bank_pass=Investorbankpass)
         obj.save()
-        return HttpResponse("Registration successful. Awaiting admin approval.")
-    return render(request, 'Investor_Details.html')
+        return render(request, 'Investor.html', {'alert_message': 'Registration complete'})
+    return render(request, 'Investor.html')
 
 
 def applicant_details(request, applicant_id):
@@ -468,7 +492,7 @@ def submit_offer(request, applicant_id):
         email.attach_alternative(html_content, "text/html")
         email.send()
 
-        return HttpResponse("Offer submitted and email sent successfully.")
+        return render(request,'investor_dashboard.html',{'alert_message': 'Your offer is submitted successfully.'})
 
     return HttpResponse("Invalid request.")
 
@@ -497,7 +521,7 @@ def accept_offer(request, offer_id):
     # Send email
     send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [investor.Investor_email])
 
-    return HttpResponse("Offer accepted successfully. Investor notified with payment link.")
+    return render(request, 'client_dashboard.html', {'alert_message': 'Email sent to notify the investor.'})
 
 
 def reject_offer(request, offer_id):
@@ -530,7 +554,7 @@ def reject_offer(request, offer_id):
         fail_silently=False,
     )
 
-    return HttpResponse("Offer rejected successfully. Investor notified.")
+    return render(request, 'client_dashboard.html', {'alert_message': 'Email sent to notify the investor.'})
 
 def applicant_login(request):
     if request.method == 'POST':
@@ -595,32 +619,30 @@ def investor_dashboard(request):
     # Get the investor details from the database
     investor = get_object_or_404(investorapplicationdb, id=investor_id)
 
-    # Get the list of approved loan applicants
-    applicants = loanapplicationdb.objects.filter(is_approved=True)
+    # Fetch offers made by this specific investor
+    offers = Offer.objects.filter(investor=investor)
 
-    # Pass both the investor name and the applicants list to the template
+    # Get the list of approved loan applicants who haven't received offers from this investor
+    approved_applicants = loanapplicationdb.objects.filter(is_approved=True)
+
+    # Debugging information
+    print(f"Investor: {investor}")
+    print(f"Offers: {offers}")
+    print(f"Approved Applicants: {approved_applicants}")
+
+    # Pass both the investor name, applicants list, and offers to the template
     context = {
         'investor_name': f"{investor.Investor_first_name} {investor.Investor_last_name}",
-        'applicants': applicants
+        'approved_applicants': approved_applicants,
+        'offers': offers
     }
 
-    return render(request, 'investor_dashboard.html', context)
+    return render(request, 'investor_dashboard.html', context)  # Use context directly
 
 
-def applicant_page(request):
-    applicant_id = request.session.get('applicant_id')
-    if not applicant_id:
-        return HttpResponse("You are not logged in.")
 
-    application = get_object_or_404(loanapplicationdb, id=applicant_id)
 
-    if not application.is_approved:
-        return HttpResponse("You are not approved to view offers yet.")
 
-    # Fetch offers for the applicant
-    offers = Offer.objects.filter(applicant=application)
-
-    return render(request, 'clientofferspage.html', {'offers': offers})
 
 def send_investor_notification(offer):
     # Generate the link to the payment gateway
@@ -705,9 +727,9 @@ def process_payment(request):
             message = f'Thank you, {investor_name}! Your payment of {amount} has been received.'
             send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, [request.user.email])  # Send to logged-in investor
 
-            return HttpResponse("Payment successful. You will be notified via email.")
+            return render(request, 'payment_gateway.html', {'alert_message': 'Payment successful'})
         except Exception as e:
-            return HttpResponse(f"Payment failed: {e}")
+            return render(request, 'payment_gateway.html',{'alert_message': f'Payment unsuccessful {e}'})
 
     return HttpResponse("Invalid request.")
 
@@ -761,7 +783,7 @@ def loan_repayment(request, loan_id):
                     settings.DEFAULT_FROM_EMAIL,
                     [repayment.applicant.Applicant_email]
                 )
-                return redirect('repayment_success')  # Redirect to a success page
+                return render(request, 'loan_repayment.html', {'alert_message': 'Repayment successful.'})  # Redirect to a success page
             else:
                 form.add_error('installment_amount', 'The installment amount must match the required installment.')
 

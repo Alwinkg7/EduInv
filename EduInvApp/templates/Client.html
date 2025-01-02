@@ -23,6 +23,7 @@
             <link rel="stylesheet" href="{% static '/assets/css/slick.css' %}">
             <link rel="stylesheet" href="{% static '/assets/css/nice-select.css' %}">
             <link rel="stylesheet" href="{% static '/assets/css/style.css' %}">
+
    </head>
 
    <body>
@@ -58,6 +59,7 @@
                                         <ul id="navigation">
                                             <li class="active"><a href="{% url 'investorpage' %}">Home</a></li>
                                             <li><a href="{% url 'aboutpage' %}">About</a></li>
+                                            <li><a href="{% url 'applicant_login' %}">Applicant login</a></li>
                                             <li><a href="{% url 'userlogoutpageclient' %}">Log Out</a></li>
                                             <li><a href="{% url 'contactpage' %}">Contact</a></li>
                                         </ul>
@@ -148,59 +150,59 @@
         </div>
         <!-- slider Area End-->
         <!-- About Law Start-->
-                <div class="about-low-area section-padding2">
-            <div class="container">
-                <div class="section-top-border">
-					<!-- Display client details here -->
-                    <h1>{{ client.Applicant_first_name }} {{ client.Applicant_last_name }}</h1>
-                    <p>Email: {{ client.Applicant_email }}</p>
-                    <p>Loan Amount: {{ client.Applicant_loan_amount }}</p>
-
-                    <!-- Display existing offers if the client is approved -->
-                    {% if client.is_approved %}
-                    <h2>Offers from Investors for {{ client.Applicant_first_name }}</h2>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Investor</th>
-                                <th>Offer Amount</th>
-                                <th>Interest Rate (%)</th>
-                                <th>Duration (Months)</th>
-                                <th>Deal</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for offer in offers %}
-                            <tr>
-                                <td>{{ offer.investor.username }}</td>
-                                <td>{{ offer.amount }}</td>
-                                <td>{{ offer.interest_rate }}</td>
-                                <td>{{ offer.duration }}</td>
-                                <td>
-                                    <form method="post" action="{% url 'accept_offer' offer.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit">Accept Offer</button>
-                                    </form>
-                                    <form method="post" action="{% url 'reject_offer' offer.id %}">
-                                        {% csrf_token %}
-                                        <button type="submit">Reject Offer</button>
-                                    </form>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="4">No offers available.</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
-                    {% else %}
-                    <p>You are not approved to view offers yet.</p>
-                    {% endif %}
-                </div>
-
-            </div>
-        </div>
+{#                <div class="about-low-area section-padding2">#}
+{#            <div class="container">#}
+{#                <div class="section-top-border">#}
+{#					<!-- Display client details here -->#}
+{#                    <h1>{{ client.Applicant_first_name }} {{ client.Applicant_last_name }}</h1>#}
+{#                    <p>Email: {{ client.Applicant_email }}</p>#}
+{#                    <p>Loan Amount: {{ client.Applicant_loan_amount }}</p>#}
+{##}
+{#                    <!-- Display existing offers if the client is approved -->#}
+{#                    {% if client.is_approved %}#}
+{#                    <h2>Offers from Investors for {{ client.Applicant_first_name }}</h2>#}
+{#                    <table>#}
+{#                        <thead>#}
+{#                            <tr>#}
+{#                                <th>Investor</th>#}
+{#                                <th>Offer Amount</th>#}
+{#                                <th>Interest Rate (%)</th>#}
+{#                                <th>Duration (Months)</th>#}
+{#                                <th>Deal</th>#}
+{#                            </tr>#}
+{#                        </thead>#}
+{#                        <tbody>#}
+{#                            {% for offer in offers %}#}
+{#                            <tr>#}
+{#                                <td>{{ offer.investor.username }}</td>#}
+{#                                <td>{{ offer.amount }}</td>#}
+{#                                <td>{{ offer.interest_rate }}</td>#}
+{#                                <td>{{ offer.duration }}</td>#}
+{#                                <td>#}
+{#                                    <form method="post" action="{% url 'accept_offer' offer.id %}">#}
+{#                                        {% csrf_token %}#}
+{#                                        <button type="submit">Accept Offer</button>#}
+{#                                    </form>#}
+{#                                    <form method="post" action="{% url 'reject_offer' offer.id %}">#}
+{#                                        {% csrf_token %}#}
+{#                                        <button type="submit">Reject Offer</button>#}
+{#                                    </form>#}
+{#                                </td>#}
+{#                            </tr>#}
+{#                            {% empty %}#}
+{#                            <tr>#}
+{#                                <td colspan="4">No offers available.</td>#}
+{#                            </tr>#}
+{#                            {% endfor %}#}
+{#                        </tbody>#}
+{#                    </table>#}
+{#                    {% else %}#}
+{#                    <p>You are not approved to view offers yet.</p>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{##}
+{#            </div>#}
+{#        </div>#}
 
         <!-- About Law End-->
         <!-- Services Area Start -->
@@ -437,6 +439,14 @@
 		<!-- Jquery Plugins, main Jquery -->
         <script src="{% static '/assets/js/plugins.js' %}"></script>
         <script src="{% static '/assets/js/main.js' %}"></script>
-
+        <script>
+            window.onload = function() {
+                // Check if an alert message exists
+                var alertMessage = "{{ alert_message }}";
+                if (alertMessage) {
+                    alert(alertMessage);  // Show a pop-up alert
+                }
+            };
+        </script>
     </body>
 </html>

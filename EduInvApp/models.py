@@ -156,8 +156,11 @@ class investorapplicationdb(models.Model):
     Investor_bank_pass = models.FileField(upload_to='documents/investor_bank_passbooks/', max_length=100, blank=True, null=True)
     is_approved = models.BooleanField(default=False)
     otp = models.CharField(max_length=6, blank=True, null=True)
+    total_investment = models.DecimalField(max_digits=10, decimal_places=2, null=True)
+
     def __str__(self):
-        return self.Investor_email
+        return f"{self.Investor_first_name} {self.Investor_last_name}"
+
 
 class InvestorOffer(models.Model):
     investor = models.ForeignKey(User, on_delete=models.CASCADE, related_name='investor_offers')
